@@ -336,26 +336,67 @@ section {
 .hero {
   padding-top: calc(var(--space-xl) + 3rem);
   padding-bottom: var(--space-xl);
-  background: linear-gradient(180deg, #fdf6f8 0%, var(--bg) 60%);
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  color: var(--cream);
 }
 
-.hero .container {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: var(--space-lg);
-  align-items: center;
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 30%;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(100deg, rgba(27, 19, 41, 0.94) 0%, rgba(27, 19, 41, 0.82) 38%, rgba(27, 19, 41, 0.55) 65%, rgba(27, 19, 41, 0.32) 100%),
+    linear-gradient(0deg, rgba(27, 19, 41, 0.5) 0%, rgba(27, 19, 41, 0) 35%);
+}
+
+.hero-inner {
   position: relative;
   z-index: 1;
 }
 
+.hero-copy {
+  max-width: 640px;
+}
+
+.hero-copy .eyebrow {
+  color: #f0c6d6;
+}
+
+.hero-copy .eyebrow::before {
+  background: #f0c6d6;
+}
+
 .hero-copy h1 {
+  color: var(--cream);
   font-size: clamp(2.4rem, 4.2vw, 3.6rem);
   margin-bottom: 1.3rem;
 }
 
+.hero-copy .swipe {
+  color: #f6d9e4;
+}
+
+.hero-copy .swipe svg path {
+  stroke: rgba(162, 75, 124, 0.55);
+}
+
 .hero-copy p.lead {
   font-size: 1.15rem;
-  color: var(--ink-soft);
+  color: rgba(255, 253, 251, 0.85);
   max-width: 46ch;
   margin-bottom: 2rem;
 }
@@ -367,16 +408,34 @@ section {
   margin-bottom: 2rem;
 }
 
+.hero .btn-ghost {
+  border-color: rgba(255, 253, 251, 0.6);
+  color: var(--cream);
+}
+
+.hero .btn-ghost:hover {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem;
+}
+
 .hero-rating {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  background: var(--cream);
-  border: 1px solid var(--line);
+  background: rgba(255, 253, 251, 0.12);
+  border: 1px solid rgba(255, 253, 251, 0.3);
+  backdrop-filter: blur(6px);
   padding: 0.7rem 1.1rem;
   border-radius: 999px;
-  box-shadow: var(--shadow-card);
   font-size: 0.92rem;
+  color: var(--cream);
 }
 
 .hero-rating .stars {
@@ -385,68 +444,32 @@ section {
 }
 
 .hero-rating strong {
-  color: var(--ink);
+  color: var(--cream);
 }
 
-.hero-visual {
-  position: relative;
-}
-
-.hero-visual-frame {
-  position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-soft);
-  aspect-ratio: 4 / 5;
-}
-
-.hero-visual-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero-badge {
-  position: absolute;
-  bottom: -1.2rem;
-  left: -1.2rem;
-  background: var(--cream);
-  border-radius: var(--radius-md);
-  padding: 1rem 1.3rem;
-  box-shadow: var(--shadow-card);
-  display: flex;
+.hero-phone {
+  display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  max-width: 230px;
+  gap: 0.55rem;
+  background: rgba(255, 253, 251, 0.12);
+  border: 1px solid rgba(255, 253, 251, 0.3);
+  backdrop-filter: blur(6px);
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--cream);
+  transition: background 0.2s ease;
 }
 
-.hero-badge .dot {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: var(--teal-soft);
-  color: var(--teal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.hero-phone:hover {
+  background: rgba(255, 253, 251, 0.22);
+}
+
+.hero-phone svg {
+  width: 17px;
+  height: 17px;
   flex-shrink: 0;
-}
-
-.hero-badge .dot svg {
-  width: 22px;
-  height: 22px;
-}
-
-.hero-badge strong {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 0.98rem;
-  line-height: 1.25;
-}
-
-.hero-badge span {
-  font-size: 0.8rem;
-  color: var(--ink-soft);
 }
 
 /* ============ Trust strip ============ */
@@ -647,7 +670,7 @@ section {
 /* ============ Gallery ============ */
 .gallery-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
   position: relative;
   z-index: 1;
@@ -658,6 +681,12 @@ section {
   overflow: hidden;
   box-shadow: var(--shadow-card);
   position: relative;
+  aspect-ratio: 3 / 4;
+}
+
+.gallery-item:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
 }
 
 .gallery-item img {
@@ -746,6 +775,27 @@ section {
   font-weight: 600;
   font-size: 0.85rem;
   flex-shrink: 0;
+}
+
+/* ============ Reels ============ */
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.reel-embed {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  min-height: 400px;
+  display: flex;
+}
+
+.reel-embed iframe {
+  border-radius: var(--radius-md) !important;
 }
 
 .testimonials-more {
@@ -1080,6 +1130,34 @@ section {
   flex: 1;
 }
 
+/* ============ Floating WhatsApp button ============ */
+.whatsapp-float {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 95;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px -8px rgba(37, 211, 102, 0.65);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 16px 34px -8px rgba(37, 211, 102, 0.75);
+}
+
+.whatsapp-float svg {
+  width: 30px;
+  height: 30px;
+}
+
 /* ============ Reveal on scroll ============ */
 .reveal {
   opacity: 0;
@@ -1103,15 +1181,18 @@ section {
     display: flex;
   }
 
-  .hero .container,
   .about .container,
   .schedule-wrap,
   .location-wrap {
     grid-template-columns: 1fr;
   }
 
-  .hero-visual {
-    order: -1;
+  .hero {
+    min-height: unset;
+  }
+
+  .hero-bg img {
+    object-position: 70% 30%;
   }
 
   .services-grid {
@@ -1135,7 +1216,13 @@ section {
   }
 
   .gallery-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-item:first-child {
+    grid-column: span 2;
+    grid-row: span 1;
+    aspect-ratio: 16 / 9;
   }
 
   .sticky-cta {
@@ -1149,23 +1236,40 @@ section {
   body {
     padding-bottom: 4.6rem;
   }
+
+  .whatsapp-float {
+    left: 16px;
+    bottom: calc(4.6rem + 16px);
+    width: 52px;
+    height: 52px;
+  }
+
+  .whatsapp-float svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .reels-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 640px) {
   .services-grid,
-  .testimonials-grid {
+  .testimonials-grid,
+  .gallery-grid,
+  .reels-grid {
     grid-template-columns: 1fr;
+  }
+
+  .gallery-item:first-child {
+    grid-column: span 1;
+    aspect-ratio: 4 / 3;
   }
 
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 1.8rem;
-  }
-
-  .hero-badge {
-    position: static;
-    margin-top: 1rem;
-    max-width: none;
   }
 
   .footer-bottom {
