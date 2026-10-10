@@ -69,3 +69,22 @@ if (prefersReducedMotion) {
   );
   revealEls.forEach((el) => observer.observe(el));
 }
+
+// Compartir
+document.getElementById('shareBtn')?.addEventListener('click', async () => {
+  const shareData = {
+    title: 'Jalu Pilates — Clases de pilates y stretching en Recoleta',
+    text: 'Clases de pilates y stretching con Jalu: grupos reducidos, privadas, a domicilio y online.',
+    url: window.location.href
+  };
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else {
+      await navigator.clipboard.writeText(shareData.url);
+      alert('Link copiado al portapapeles');
+    }
+  } catch (err) {
+    /* el usuario canceló o el navegador no lo soporta */
+  }
+});
