@@ -88,3 +88,14 @@ document.getElementById('shareBtn')?.addEventListener('click', async () => {
     /* el usuario canceló o el navegador no lo soporta */
   }
 });
+
+// Analytics: contar clics en WhatsApp como conversión
+document.querySelectorAll('a[href^="https://wa.me/"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    if (typeof gtag === 'function') {
+      gtag('event', 'whatsapp_click', {
+        link_location: link.closest('section, header, footer, .sticky-cta, .mobile-nav')?.id || link.className
+      });
+    }
+  });
+});
